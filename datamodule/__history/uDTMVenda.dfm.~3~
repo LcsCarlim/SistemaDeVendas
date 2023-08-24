@@ -1,0 +1,99 @@
+object dtmVenda: TdtmVenda
+  OldCreateOrder = False
+  OnCreate = DataModuleCreate
+  OnDestroy = DataModuleDestroy
+  Height = 276
+  Width = 530
+  object QryCliente: TZQuery
+    Connection = dtmPrincipal.ConexaoDB
+    SQL.Strings = (
+      'select clienteId,'
+      'nome'
+      'from clientes')
+    Params = <>
+    Left = 56
+    Top = 40
+    object QryClienteclienteId: TIntegerField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'clienteId'
+      ReadOnly = True
+    end
+    object QryClientenome: TWideStringField
+      DisplayLabel = 'Nome'
+      FieldName = 'nome'
+      Size = 60
+    end
+  end
+  object QryProdutos: TZQuery
+    Connection = dtmPrincipal.ConexaoDB
+    SQL.Strings = (
+      'select produtoId,'
+      'nome,'
+      'valor,'
+      'quantidade'
+      'from produtos')
+    Params = <>
+    Left = 120
+    Top = 40
+    object QryProdutosprodutoId: TIntegerField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'produtoId'
+      ReadOnly = True
+    end
+    object QryProdutosnome: TWideStringField
+      DisplayLabel = 'Nome'
+      FieldName = 'nome'
+      Size = 60
+    end
+    object QryProdutosvalor: TFloatField
+      DisplayLabel = 'Valor'
+      FieldName = 'valor'
+    end
+    object QryProdutosquantidade: TFloatField
+      DisplayLabel = 'Quantidade'
+      FieldName = 'quantidade'
+    end
+  end
+  object cdsItensVenda: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 304
+    Top = 48
+    object cdsItensVendaprodutoId: TIntegerField
+      FieldName = 'produtoId'
+    end
+    object cdsItensVendaNomeProduto: TStringField
+      FieldName = 'NomeProduto'
+      Size = 60
+    end
+    object cdsItensVendaquantidade: TFloatField
+      FieldName = 'quantidade'
+    end
+    object cdsItensVendavalorUnitario: TFloatField
+      FieldName = 'valorUnitario'
+    end
+    object cdsItensVendavalorTotalProduto: TFloatField
+      FieldName = 'valorTotalProduto'
+    end
+    object cdsItensVendavalorTotalVenda: TAggregateField
+      FieldName = 'valorTotalVenda'
+      DisplayName = ''
+      Expression = 'SUM(valorTotalProduto)'
+    end
+  end
+  object dtsItensVenda: TDataSource
+    DataSet = cdsItensVenda
+    Left = 304
+    Top = 104
+  end
+  object dtsCliente: TDataSource
+    DataSet = QryCliente
+    Left = 56
+    Top = 96
+  end
+  object dtsProdutos: TDataSource
+    DataSet = QryProdutos
+    Left = 128
+    Top = 96
+  end
+end

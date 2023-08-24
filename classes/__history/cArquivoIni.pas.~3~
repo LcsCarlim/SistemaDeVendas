@@ -1,0 +1,25 @@
+unit cArquivoIni;
+
+interface
+
+uses System.Classes,
+     Vcl.Controls,
+     Vcl.ExtCtrls,
+     Vcl.Dialogs,
+     Vcl.Forms,
+     System.IniFiles,
+     System.SysUtils;
+
+type
+  TArquivoIni = class
+  private
+
+  public
+    class function ArquivoIni:String; static;
+    class function LerIni(aSecao:String; aEntrada:String):String; static;
+    class procedure AtualizarIni(aSecao, aEntrada, aValor:String); static;
+end;
+
+implementation
+
+end.

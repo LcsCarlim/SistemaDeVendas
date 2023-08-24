@@ -1,0 +1,53 @@
+object DTMGrafico: TDTMGrafico
+  OldCreateOrder = False
+  Height = 438
+  Width = 651
+  object QryProdutoEstoque: TZQuery
+    Connection = dtmPrincipal.ConexaoDB
+    SQL.Strings = (
+      
+        'select convert(varchar, produtoId) +'#39' - '#39'+nome as Label, Quantid' +
+        'ade as Value from produtos')
+    Params = <>
+    Left = 144
+    Top = 88
+    object QryProdutoEstoqueLabel: TWideStringField
+      FieldName = 'Label'
+      ReadOnly = True
+      Size = 93
+    end
+    object QryProdutoEstoqueValue: TFloatField
+      FieldName = 'Value'
+    end
+  end
+  object dtsProdutoEstoque: TDataSource
+    DataSet = QryProdutoEstoque
+    Left = 232
+    Top = 128
+  end
+  object QryValorVendaPorCliente: TZQuery
+    Connection = dtmPrincipal.ConexaoDB
+    SQL.Strings = (
+      
+        'select convert(varchar, vendas.clienteID) + '#39' - '#39'+ clientes.nome' +
+        ' AS Label, SUM(vendas.totalVenda) as Value'
+      'from Vendas'
+      #9'INNER JOIN clientes on clientes.clienteId = vendas.clienteId'
+      
+        #9'where vendas.dataVenda between convert(DATE, GETDATE()-7) and c' +
+        'onvert(DATE, GETDATE())'
+      #9'group by Vendas.clienteId, clientes.Nome')
+    Params = <>
+    Left = 376
+    Top = 216
+    object QryValorVendaPorClienteLabel: TWideStringField
+      FieldName = 'Label'
+      ReadOnly = True
+      Size = 93
+    end
+    object QryValorVendaPorClienteValue: TFloatField
+      FieldName = 'Value'
+      ReadOnly = True
+    end
+  end
+end

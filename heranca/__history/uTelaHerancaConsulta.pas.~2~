@@ -1,0 +1,56 @@
+unit uTelaHerancaConsulta;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.StdCtrls, Vcl.Buttons, ZAbstractRODataset, ZAbstractDataset, ZDataset,
+  Vcl.Grids, Vcl.DBGrids, Vcl.Mask, Vcl.ExtCtrls;
+
+type
+  TfrmTelaHerancaConsulta = class(TForm)
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    mskPesquisa: TMaskEdit;
+    lblIndice: TLabel;
+    grdPesquisa: TDBGrid;
+    dtsListagem: TDataSource;
+    QryListagem: TZQuery;
+    btnFechar: TBitBtn;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure grdPesquisaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmTelaHerancaConsulta: TfrmTelaHerancaConsulta;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmTelaHerancaConsulta.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Close;
+end;
+
+procedure TfrmTelaHerancaConsulta.FormCreate(Sender: TObject);
+begin
+  if QryListagem.Active then
+     QryListagem.Close;
+
+  QryListagem.Open;
+end;
+
+procedure TfrmTelaHerancaConsulta.grdPesquisaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  if (Shift = [ssCtrl]) and (Key = 46) then
+      Key := 0;
+end;
+
+end.

@@ -1,0 +1,48 @@
+unit uGrid;
+
+interface
+
+uses
+  SysUtils, Classes, DBGrids, Graphics, Types, DB, Messages, Windows, Grids;
+
+procedure ZebrarGrid(Sender: TObject; const Rect: TRect; DataCol: Integer;
+  Column: TColumn; State: TGridDrawState);
+
+procedure FormatarTitulosColunas(DBGrid: TDBGrid);
+
+implementation
+
+procedure ZebrarGrid(Sender: TObject; const Rect: TRect; DataCol: Integer;
+  Column: TColumn; State: TGridDrawState);
+var
+  Grid: TDBGrid;
+begin
+  if not (Sender is TDBGrid) then
+    Exit;
+  Grid := TDBGrid(Sender);
+  if not (gdSelected in State) then
+  begin
+    if Grid.DataSource.DataSet.RecNo mod 2 = 0 then
+       Grid.Canvas.Brush.Color := clWhite
+  Grid.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+    else
+      Grid.Canvas.Brush.Color := clMedGray;
+      Grid.Canvas.FillRect(Rect);
+  end;
+end;
+
+procedure FormatarTitulosColunas(DBGrid: TDBGrid);
+var
+  i: Integer;
+begin
+  for i := 0 to DBGrid.Columns.Count - 1 do
+  begin
+    DBGrid.DrawingStyle := gdsClassic;
+    DBGrid.Columns[i].Title.Font.Color := clWhite;
+    DBGrid.Columns[i].Title.Alignment  := taCenter;
+    DBGrid.Columns[i].Title.Color      := clGray;
+  end;
+end;
+
+end.
+

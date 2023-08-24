@@ -1,0 +1,17 @@
+unit cSomenteNumeros;
+
+interface
+
+implementation
+
+function SoNumeroo(fField : String): String;
+var
+  I : Byte;
+begin
+   Result := '';
+   for I := 1 To Length(fField) do
+       if fField [I] In ['0'..'9', '.', '-', '/', '(', ')'] Then
+            Result := Result + fField [I];
+end;
+
+end.

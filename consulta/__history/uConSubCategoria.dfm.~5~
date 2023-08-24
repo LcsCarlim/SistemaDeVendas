@@ -1,0 +1,19 @@
+inherited frmConSubCategoria: TfrmConSubCategoria
+  Caption = 'Consulta SubCategoria'
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited Panel1: TPanel
+    ExplicitWidth = 777
+    inherited mskPesquisa: TMaskEdit
+      ExplicitWidth = 775
+    end
+  end
+  inherited Panel2: TPanel
+    inherited btnFechar: TBitBtn
+      ExplicitLeft = 693
+    end
+  end
+  inherited Panel3: TPanel
+    ExplicitWidth = 777
+  end
+end

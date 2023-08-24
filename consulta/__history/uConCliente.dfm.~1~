@@ -1,0 +1,20 @@
+inherited frmConCliente: TfrmConCliente
+  Caption = 'Consulta de Clientes'
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited Panel1: TPanel
+    ExplicitWidth = 777
+    inherited mskPesquisa: TMaskEdit
+      ExplicitWidth = 775
+    end
+  end
+  inherited Panel2: TPanel
+    ExplicitWidth = 777
+    inherited btnFechar: TBitBtn
+      ExplicitLeft = 693
+    end
+  end
+  inherited Panel3: TPanel
+    ExplicitWidth = 777
+  end
+end

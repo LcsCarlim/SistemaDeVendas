@@ -1,0 +1,5 @@
+inherited frmConProduto1: TfrmConProduto1
+  Caption = 'frmConProduto1'
+  PixelsPerInch = 96
+  TextHeight = 13
+end

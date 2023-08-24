@@ -1,0 +1,36 @@
+unit uConSubCategoria;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHerancaConsulta, Data.DB, ZAbstractRODataset, ZAbstractDataset, ZDataset,
+  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask, Vcl.ExtCtrls;
+
+type
+  TfrmConSubCategoria = class(TfrmTelaHerancaConsulta)
+    QryListagemsubCategoriaId: TIntegerField;
+    QryListagemcategoriaId: TIntegerField;
+    QryListagemdescricao: TWideStringField;
+    QryListagemDescricaoCategoria: TWideStringField;
+    procedure btnFecharClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmConSubCategoria: TfrmConSubCategoria;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmConSubCategoria.btnFecharClick(Sender: TObject);
+begin
+  inherited;
+  Close;
+end;
+
+end.

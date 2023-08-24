@@ -1,0 +1,39 @@
+unit cCadSubCategoria;
+
+interface
+
+uses System.Classes,
+     Vcl.Controls,
+     Vcl.ExtCtrls,
+     Vcl.Dialogs,
+     ZAbstractConnection,
+     ZConnection,
+     ZAbstractRODataset,
+     ZAbstractDataset,
+     ZDataset,
+     System.SysUtils;
+
+type
+  TSubCategoria = class
+  private
+    ConexaoDB:TZConnection;
+      F_subCategoriaId:Integer;
+      F_categoriaId:Integer;
+      F_descricao:String;
+
+    public
+      constructor Create(aConexao:TZConnection);
+      destructor Destroy; override;
+      function Inserir:Boolean;
+      function Atualizar:Boolean;
+      function Apagar:Boolean;
+      function Selecionar(id:Integer):Boolean;
+    published
+      property codigo        :Integer    read F_subCategiruaId        write F_subCategiruaId;
+      property categoriaId   :Integer    read F_categoriId            write F_categoriaId;
+      property descricao     :String     read F_descricao             write F_descricao;
+end;
+
+implementation
+
+end.

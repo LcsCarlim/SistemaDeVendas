@@ -1,0 +1,48 @@
+unit cAcaoAcesso;
+
+interface
+
+uses System.Classes,
+     Vcl.Controls,
+     Vcl.ExtCtrls,
+     Vcl.Dialogs,
+     ZAbstractConnection,
+     ZConnection,
+     ZAbstractRODataset,
+     ZAbstractDataset,
+     ZDataset,
+     System.SysUtils,
+     Vcl.Forms,
+     Vcl.Buttons;
+
+type
+  TAcaoAcesso = class
+  private
+    ConexaoDB:TZConnection;
+    F_acaoAcessoId:Integer;
+    F_descricao:String;
+    F_chave:String;
+  public
+    constructor Create(aConexao:TZConnection);
+    destructor Destroy; override;
+  published
+    property codigo        :Integer     read F_acaoAcessoId     write F_acaoAcessoId;
+    property descricao     :String      read F_descricao        write F_descricao;
+    property chave         :String      read F_chave            write F_chave;
+  end;
+implementation
+
+{ TAcaoAcesso }
+
+constructor TAcaoAcesso.Create(aConexao: TZConnection);
+begin
+  ConexaoDB:=aConexao;
+end;
+
+destructor TAcaoAcesso.Destroy;
+begin
+
+  inherited;
+end;
+
+end.

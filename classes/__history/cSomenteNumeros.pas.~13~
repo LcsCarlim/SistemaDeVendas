@@ -1,0 +1,38 @@
+unit cSomenteNumeros;
+
+interface
+
+uses System.Classes,
+     Vcl.Controls,
+     Vcl.ExtCtrls,
+     Vcl.Dialogs,
+     ZAbstractConnection,
+     ZConnection,
+     ZAbstractRODataset,
+     ZAbstractDataset,
+     ZDataset,
+     System.SysUtils,
+     Vcl.Forms,
+     Vcl.Buttons;
+
+type
+TSomenteNumeros = class
+  private
+
+  public
+  class function SoNumero(fField: String): String;
+end;
+
+implementation
+
+class function TSomenteNumeros.SoNumero(fField : String): String;
+var
+  I : Byte;
+begin
+   Result := '';
+   for I := 1 To Length(fField) do
+       if fField [I] In ['0'..'9', '.', '-', '/', '(', ')', '/'] Then
+            Result := Result + fField [I];
+end;
+
+end.

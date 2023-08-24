@@ -1,0 +1,147 @@
+unit uCadSubCategoria;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, Vcl.DBCtrls,
+  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask, Vcl.ExtCtrls, Vcl.ComCtrls, cFuncao, uCadCategoria,
+  cCadSubCategoria, uEnum;
+
+type
+  TfrmCadSubCategoria = class(TfrmTelaHeranca)
+    QryListagemsubCategoriaId: TIntegerField;
+    QryListagemcategoriaId: TIntegerField;
+    QryListagemdescricao: TWideStringField;
+    edtSubCategoria: TLabeledEdit;
+    edtSubCategoriaId: TLabeledEdit;
+    lkpCategoria: TDBLookupComboBox;
+    QryCategoria: TZQuery;
+    dtsCategoria: TDataSource;
+    QryCategoriacategoriaId: TIntegerField;
+    QryCategoriadescricao: TWideStringField;
+    lblCategoria: TLabel;
+    btnIncluirCategoria: TSpeedButton;
+    btnPesquisarCategoria: TSpeedButton;
+    QryListagemDescricaoCategoria: TWideStringField;
+    procedure btnIncluirCategoriaClick(Sender: TObject);
+    procedure btnPesquisarCategoriaClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure btnAlterarClick(Sender: TObject);
+    procedure btnNovoClick(Sender: TObject);
+  private
+    { Private declarations }
+    oSubCategoria:TSubCategoria;
+    Function Gravar(EstadoDoCadastro:TEstadoDoCadastro):Boolean; override;
+    Function Apagar:Boolean; override;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCadSubCategoria: TfrmCadSubCategoria;
+
+implementation
+
+{$R *.dfm}
+
+uses uDTMConexao, uPrincipal, uConCategoria;
+
+function TfrmCadSubCategoria.Apagar: Boolean;
+begin
+  if oSubCategoria.Selecionar(QryListagem.FieldByName('subCategoriaId').AsInteger) then
+  begin
+     Result:=oSubCategoria.Apagar;
+  end;
+end;
+
+procedure TfrmCadSubCategoria.btnAlterarClick(Sender: TObject);
+begin
+  if oSubCategoria.Selecionar(QryListagem.FieldByName('subCategoriaId').AsInteger) then
+  begin
+     edtSubCategoriaId.Text:=IntToStr(oSubCategoria.codigo);
+     lkpCategoria.KeyValue:=oSubCategoria.categoriaId;
+     edtSubCategoria.Text      :=oSubCategoria.descricao;
+  end
+  else
+  begin
+    btnCancelar.Click;
+    abort;
+  end;
+  inherited;
+
+end;
+
+procedure TfrmCadSubCategoria.btnIncluirCategoriaClick(Sender: TObject);
+begin
+  inherited;
+  TFuncao.CriarForm(TfrmCadCategoria, oUsuarioLogado, DtmPrincipal.ConexaoDB);
+  QryCategoria.Refresh;
+end;
+
+procedure TfrmCadSubCategoria.btnNovoClick(Sender: TObject);
+begin
+  inherited;
+  lkpCategoria.SetFocus;
+end;
+
+procedure TfrmCadSubCategoria.btnPesquisarCategoriaClick(Sender: TObject);
+begin
+  inherited;
+  Try
+    frmConCategoria:=TfrmConCategoria.Create(Self);
+
+    if lkpCategoria.KeyValue<>Null then
+       frmConCategoria.aIniciarPesquisaId:=lkpCategoria.KeyValue;
+
+    frmConCategoria.ShowModal;
+
+    if frmConCategoria.aRetornarIdSelecionado<>Unassigned then
+       lkpCategoria.KeyValue:=frmConCategoria.aRetornarIdSelecionado;
+  Finally
+    frmConCategoria.Release;
+  End;
+end;
+
+procedure TfrmCadSubCategoria.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  if Assigned(oSubCategoria) then
+    FreeAndNil(oSubCategoria);
+  grdListagem.Columns.SaveToFile('C:\ProjetoDelphi\Win32\Config\CadastroDeSubCategoria');
+end;
+
+procedure TfrmCadSubCategoria.FormCreate(Sender: TObject);
+begin
+  inherited;
+  oSubCategoria:=TSubCategoria.Create(dtmPrincipal.ConexaoDB);
+
+  IndiceAtual:= 'descricao';
+end;
+
+procedure TfrmCadSubCategoria.FormShow(Sender: TObject);
+begin
+  inherited;
+  grdListagem.Columns.LoadFromFile('C:\ProjetoDelphi\Win32\Config\CadastroDeSubCategoria');
+end;
+
+function TfrmCadSubCategoria.Gravar(EstadoDoCadastro: TEstadoDoCadastro): Boolean;
+begin
+  if edtSubCategoriaId.Text<>EmptyStr then
+     oSubCategoria.codigo:= StrToInt(edtSubCategoriaId.Text)
+  else
+     oSubCategoria.codigo:= 0;
+
+  oSubCategoria.categoriaId:= lkpCategoria.KeyValue;
+  oSubCategoria.descricao:= edtSubCategoria.Text;
+
+  if (EstadoDoCadastro=ecInserir) then
+      Result:=oSubCategoria.Inserir
+  else
+  if (EstadoDoCadastro=ecAlterar) then
+      Result:=oSubCategoria.Atualizar;
+end;
+
+end.

@@ -1,0 +1,67 @@
+inherited frmConCategoria: TfrmConCategoria
+  Caption = 'Consultas de Categorias'
+  ClientWidth = 683
+  ExplicitWidth = 689
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited Panel1: TPanel
+    Width = 683
+    ExplicitLeft = 0
+    ExplicitTop = 0
+    ExplicitWidth = 780
+    inherited mskPesquisa: TMaskEdit
+      Width = 681
+      ExplicitTop = 16
+      ExplicitWidth = 778
+    end
+  end
+  inherited Panel2: TPanel
+    Width = 683
+    ExplicitLeft = 0
+    ExplicitTop = 431
+    ExplicitWidth = 780
+    inherited btnFechar: TBitBtn
+      Left = 599
+      OnClick = nil
+    end
+  end
+  inherited Panel3: TPanel
+    Width = 683
+    ExplicitLeft = 0
+    ExplicitTop = 41
+    ExplicitWidth = 780
+    ExplicitHeight = 390
+    inherited grdPesquisa: TDBGrid
+      Width = 681
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'categoriaId'
+          Width = 114
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'descricao'
+          Width = 522
+          Visible = True
+        end>
+    end
+  end
+  inherited QryListagem: TZQuery
+    SQL.Strings = (
+      'SELECT categoriaId,'
+      '       descricao'
+      '  FROM categorias')
+    object QryListagemcategoriaId: TIntegerField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'categoriaId'
+      ReadOnly = True
+    end
+    object QryListagemdescricao: TWideStringField
+      DisplayLabel = 'Descri'#231#227'o'
+      FieldName = 'descricao'
+      Size = 30
+    end
+  end
+end
